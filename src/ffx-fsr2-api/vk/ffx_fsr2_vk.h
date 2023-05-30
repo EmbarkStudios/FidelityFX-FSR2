@@ -34,7 +34,7 @@ extern "C" {
     ///
     /// @returns
     /// The size (in bytes) of the required scratch memory buffer for the VK backend.
-    FFX_API size_t ffxFsr2GetScratchMemorySizeVK(VkPhysicalDevice physicalDevice);
+    FFX_API size_t ffxFsr2GetScratchMemorySizeVK(VkPhysicalDevice physicalDevice, PFN_vkEnumerateDeviceExtensionProperties enumerateDeviceExtensionProperties = nullptr);
 
     /// Populate an interface with pointers for the VK backend.
     ///
@@ -42,8 +42,10 @@ extern "C" {
     /// @param [in] device                      A Vulkan device.
     /// @param [in] scratchBuffer               A pointer to a buffer of memory which can be used by the DirectX(R)12 backend.
     /// @param [in] scratchBufferSize           The size (in bytes) of the buffer pointed to by <c><i>scratchBuffer</i></c>.
+    /// @param [in] instance                    A Vulkan instance. Provide a nullptr if you don't need to load function pointers from the instance directly.
     /// @param [in] physicalDevice              The Vulkan physical device that FSR 2.0 will be executed on.
-    /// @param [in] getDeviceProcAddr           A function pointer to vkGetDeviceProcAddr which is used to obtain all the other Vulkan functions.
+    /// @param [in] getInstanceProcAddr         A function pointer to vkGetInstanceProcAddr which is used to obtain all the Vulkan instance functions.
+    /// @param [in] getDeviceProcAddr           A function pointer to vkGetDeviceProcAddr which is used to obtain all the Vulkan device functions.
     /// 
     /// @retval
     /// FFX_OK                                  The operation completed successfully.
@@ -55,7 +57,9 @@ extern "C" {
         FfxFsr2Interface* outInterface,
         void* scratchBuffer,
         size_t scratchBufferSize,
+        VkInstance instance,
         VkPhysicalDevice physicalDevice,
+        PFN_vkGetInstanceProcAddr getInstanceProcAddr,
         PFN_vkGetDeviceProcAddr getDeviceProcAddr);
 
     /// Create a <c><i>FfxFsr2Device</i></c> from a <c><i>VkDevice</i></c>.

@@ -108,7 +108,7 @@ void UpscaleContext_FSR2_API::OnCreateWindowSizeDependentResources(
     // Setup VK interface.
     const size_t scratchBufferSize = ffxFsr2GetScratchMemorySizeVK(m_pDevice->GetPhysicalDevice());
     void* scratchBuffer = malloc(scratchBufferSize);
-    FfxErrorCode errorCode = ffxFsr2GetInterfaceVK(&initializationParameters.callbacks, scratchBuffer, scratchBufferSize, m_pDevice->GetPhysicalDevice(), vkGetDeviceProcAddr);
+    FfxErrorCode errorCode = ffxFsr2GetInterfaceVK(&initializationParameters.callbacks, scratchBuffer, scratchBufferSize, nullptr, m_pDevice->GetPhysicalDevice(), vkGetInstanceProcAddr, vkGetDeviceProcAddr);
     FFX_ASSERT(errorCode == FFX_OK);
 
     initializationParameters.device = ffxGetDeviceVK(m_pDevice->GetDevice());
